@@ -33,14 +33,6 @@ exports.isEmpty = (obj) => {
     return true;
 };
 
-// giving access to nodeMailer for logging into mail account
-let mailTransporter = nodeMailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: "haqtaha@gmail.com",
-        pass: 'mvibckbmjwpddzsj'
-    }
-});
 
 exports.sendContactMail = async (details) => {
     try {
