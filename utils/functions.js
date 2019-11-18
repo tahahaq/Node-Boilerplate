@@ -5,21 +5,6 @@ var exports = module.exports = {},
     nodeMailer = require('nodemailer');
 
 
-
-
-exports.createMerkleTree = async () => {
-  try {
-      const leaves = ['a', 'b', 'c'].map(x => SHA256(x))
-      const tree = new MerkleTree(leaves, SHA256)
-      const root = tree.getRoot().toString('hex')
-      const leaf = SHA256('a')
-      const proof = tree.getProof(leaf)
-      console.log(proof) // true
-  }  catch (e) {
-
-  }
-};
-
 exports.isDuplicateUser = async (user) => {
     let duplicateUser = await adminModel.find({email: user.email});
     return !Array.isArray(duplicateUser) || !duplicateUser.length;
@@ -60,18 +45,6 @@ exports.sendContactMail = async (details) => {
     }
 };
 
-
-//
-//
-// exports.isDuplicateAdmin = async (user) => {
-//     let duplicateUser = await adminModel.find({email: user.email});
-//     return !Array.isArray(duplicateUser) || !duplicateUser.length;
-// };
-//
-// exports.isDuplicateUser = async (user) => {
-//     let duplicateUser = await userModel.find({email: user.email});
-//     return !Array.isArray(duplicateUser) || !duplicateUser.length;
-// };
 
 exports.isEmpty = (obj) => {
     for (let key in obj) {
