@@ -6,6 +6,9 @@ let express = require('express'),
     db_read = require('../db-functions/read'),
     db_update = require('../db-functions/update'),
     utilsFunction = require('../utils/functions');
+    //jwt token verification function
+    //pass token in header in attribute authorization
+    const checkAuth=require("../utils/jwt-Auth"); 
 
 
 
@@ -129,7 +132,7 @@ router.post('/login', function (req, res) {
  */
 
 
-router.post("/certificate", function (req, res) {
+router.post("/certificate",checkAuth, function (req, res) {
     db_insert.insertCertificates(req.body).then((response) => {
         //SUCCESS
         res.status(201).send(
@@ -176,7 +179,7 @@ router.get("/certificate/blockstack/:id", function (req, res) {
 });
 
 
-router.get("/certificate", function (req, res) {
+router.get("/certificate",checkAuth, function (req, res) {
     db_read.getCertificates(req.body).then((response) => {
         //SUCCESS
         res.status(200).send(
@@ -200,7 +203,7 @@ router.get("/certificate", function (req, res) {
 });
 
 
-router.get("/certificate/count", function (req, res) {
+router.get("/certificate/count",checkAuth, function (req, res) {
     db_read.getCertificateCount().then((response) => {
         //SUCCESS
         res.status(200).send(
@@ -223,7 +226,7 @@ router.get("/certificate/count", function (req, res) {
     });
 });
 
-router.get("/certificate/:id", function (req, res) {
+router.get("/certificate/:id",checkAuth, function (req, res) {
     db_read.getCertificateById(req.params.id).then((response) => {
         //SUCCESS
         res.status(200).send(
@@ -287,7 +290,7 @@ router.get("/certificate/:id", function (req, res) {
  * @apiErrorExample {json} List error
  *    HTTP/1.1 503 Internal Server Error
  */
-router.get("/participant", function (req, res) {
+router.get("/participant", checkAuth,function (req, res) {
     db_read.getParticipants(req.body).then((response) => {
         //SUCCESS
         res.status(200).send(
@@ -366,7 +369,7 @@ router.get("/participant", function (req, res) {
  *    HTTP/1.1 503 Internal Server Error
  */
 
-router.get("/participant/exist/:id", function (req, res) {
+router.get("/participant/exist/:id", checkAuth,function (req, res) {
     db_read.ifParticipantExist(req.params.id).then((response) => {
         //SUCCESS
         res.status(200).send(
@@ -390,7 +393,7 @@ router.get("/participant/exist/:id", function (req, res) {
 });
 
 
-router.put("/participant", function (req, res) {
+router.put("/participant",checkAuth, function (req, res) {
     db_update.updateParticipant( req.body).then((response) => {
         //SUCCESS
         res.status(201).send(
@@ -416,7 +419,7 @@ router.put("/participant", function (req, res) {
 
 
 
-router.post("/do-the-magic",  function (req, res) {
+router.post("/do-the-magic",checkAuth,  function (req, res) {
     db_update.updateTeamName().then((response) => {
         //SUCCESS
         res.status(201).send(
@@ -440,7 +443,7 @@ router.post("/do-the-magic",  function (req, res) {
 });
 
 
-router.post("/participant",  function (req, res) {
+router.post("/participant",checkAuth,  function (req, res) {
     db_insert.insertParticipant(req.body).then((response) => {
         //SUCCESS
         res.status(201).send(
